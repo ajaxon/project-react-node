@@ -4,6 +4,7 @@ const { router, get } = require('microrouter')
 module.exports = router(
   get('/', (req, res) => {
     const vin = req.query.vin
+    
     const subscriptionLength = parseInt(req.query.subscriptionLength, 10)
 
     if (!vin) {
