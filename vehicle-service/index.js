@@ -1,16 +1,29 @@
 const { send } = require('micro')
 const { router, get } = require('microrouter')
+const cors = require('micro-cors')()
 
-module.exports = router(
-  get('/vehicles', (req, res) => {
-    const vehicles = [
-      {"description": "2006 Honda Accord", "odometer": 25567}
-    ]
+var MongoClient = require('mongodb').MongoClient;
+var uri = "mongodb+srv://ajaxon:testpassword@cluster0-818h0.mongodb.net/fdrive?retryWrites=true";
 
-    // TODO: Return list of vehicles
+const service  = router(
+  get('/vehicles', async (req, res) => {
+    
+    let client = await MongoClient.connect(uri);
 
-    return {
-      vehicles
-    }
+    let collection =  client.db("fdrive").collection("vehicles");
+
+    const docs = await collection.find({}).toArray();
+
+    client.close();
+      //const collection = client.db("fdrive").collection("subscriptions");
+      //const doc = await collection.insert(subscription);
+      //console.log(doc);
+    return send(res, 200, docs);
+    
+
+    
   })
 )
+
+
+module.exports = cors(service);

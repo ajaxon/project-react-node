@@ -1,6 +1,11 @@
 import React, { Component } from 'react'
 import './App.css'
 import SubscriptionForm from './SubscriptionForm';
+import MuiPickersUtilsProvider from 'material-ui-pickers/utils/MuiPickersUtilsProvider';
+
+import LuxonUtils from 'material-ui-pickers/utils/luxon-utils';
+
+import Header from './Header';
 
 class App extends Component {
 
@@ -22,14 +27,19 @@ class App extends Component {
   }
   render() {
     return (
+      <MuiPickersUtilsProvider utils={LuxonUtils}>
+      <Header/>
       <div className="App">
         <header className="App-header">
-          <h1 className="App-title">Sign Up for a Subscription!</h1>
+          
         </header>
         <p className="App-intro">
+        <main>
        <SubscriptionForm data = {this.state.data}  updateStateProp = {this.updateState}> </SubscriptionForm>
+        </main>
         </p>
       </div>
+      </MuiPickersUtilsProvider>
     )
   }
 }
